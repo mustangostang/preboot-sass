@@ -65,40 +65,6 @@ $grid-float-breakpoint: 768px;
 
 
 //
-// Grid system
-// --------------------------------------------------
-
-// Grid
-@mixin make-row {
-  // Negative margin the row out to align the content of columns
-  margin-left: -$grid-column-padding;
-  margin-right: -$grid-column-padding;
-  // Then clear the floated columns
-  @include clearfix;
-}
-@mixin make-column($columns) {
-  @media (min-width: $grid-float-breakpoint) {
-    float: left;
-    // Calculate width based on number of columns available
-    width: percentage($columns / $grid-columns);
-  }
-  // Prevent columns from collapsing when empty
-  min-height: 1px;
-  // Set inner padding as gutters instead of margin
-  padding-left: $grid-column-padding;
-  padding-right: $grid-column-padding;
-  // Proper box-model (padding doesn't add to width)
-  @include box-sizing(border-box);
-}
-@mixin make-column-offset($columns) {
-  @media (min-width: $grid-float-breakpoint) {
-    margin-left: percentage($columns / $grid-columns);
-  }
-}
-
-
-
-//
 // Mixins: vendor prefixes
 // --------------------------------------------------
 
@@ -398,5 +364,43 @@ $grid-float-breakpoint: 768px;
   only screen and (                min-resolution: 2dppx) {
     background-image: url("${file-2x}");
     background-size: $width-1x $height-1x;
+  }
+}
+
+
+
+//
+// Grid system
+// --------------------------------------------------
+
+// Grid
+@mixin make-row {
+  // Negative margin the row out to align the content of columns
+  margin-left: -$grid-column-padding;
+  margin-right: -$grid-column-padding;
+  // Then clear the floated columns
+  @include clearfix;
+}
+// Common Column Properties
+%column {
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Set inner padding as gutters instead of margin
+  padding-left: $grid-column-padding;
+  padding-right: $grid-column-padding;
+  // Proper box-model (padding doesn't add to width)
+  @include box-sizing(border-box);
+  @media (min-width: $grid-float-breakpoint) {
+    float: left;
+    // Calculate width based on number of columns available
+  }
+}
+@mixin make-column($columns) {
+  width: percentage($columns / $grid-columns);
+  @extend %column;
+}
+@mixin make-column-offset($columns) {
+  @media (min-width: $grid-float-breakpoint) {
+    margin-left: percentage($columns / $grid-columns);
   }
 }
