@@ -1,4 +1,4 @@
-preboot-sass
+preboot-sass awesome
 ============
 
 A port of [Preboot 2](https://github.com/mdo/preboot) to [SASS](http://sass-lang.com). Preboot by @mdo is a collection of LESS mixins and variables for quickly writing CSS.
